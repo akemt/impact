@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreAuthorextraMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreAuthorextra" >
+    <id column="AutID" property="autid" jdbcType="VARCHAR" />
+    <result column="SurName" property="surname" jdbcType="VARCHAR" />
+    <result column="GivenName" property="givenname" jdbcType="VARCHAR" />
+    <result column="Initials" property="initials" jdbcType="VARCHAR" />
+    <result column="UpdTime" property="updtime" jdbcType="TIMESTAMP" />
+    <result column="AbbrName" property="abbrname" jdbcType="VARCHAR" />
+    <result column="Alias" property="alias" jdbcType="VARCHAR" />
+    <result column="TagCloud_UpdTime" property="tagcloudUpdtime" jdbcType="TIMESTAMP" />
+    <result column="Summary" property="summary" jdbcType="LONGVARCHAR" />
+    <result column="TagCloud" property="tagcloud" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_AuthorExtra
+    where AutID = #{autid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreAuthorextra" >
+    insert into core_AuthorExtra (AutID, SurName, GivenName, 
+      Initials, UpdTime, AbbrName, 
+      Alias, TagCloud_UpdTime, Summary, 
+      TagCloud)
+    values (#{autid,jdbcType=VARCHAR}, #{surname,jdbcType=VARCHAR}, #{givenname,jdbcType=VARCHAR}, 
+      #{initials,jdbcType=VARCHAR}, #{updtime,jdbcType=TIMESTAMP}, #{abbrname,jdbcType=VARCHAR}, 
+      #{alias,jdbcType=VARCHAR}, #{tagcloudUpdtime,jdbcType=TIMESTAMP}, #{summary,jdbcType=LONGVARCHAR}, 
+      #{tagcloud,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreAuthorextra" >
+    update core_AuthorExtra
+    set SurName = #{surname,jdbcType=VARCHAR},
+      GivenName = #{givenname,jdbcType=VARCHAR},
+      Initials = #{initials,jdbcType=VARCHAR},
+      UpdTime = #{updtime,jdbcType=TIMESTAMP},
+      AbbrName = #{abbrname,jdbcType=VARCHAR},
+      Alias = #{alias,jdbcType=VARCHAR},
+      TagCloud_UpdTime = #{tagcloudUpdtime,jdbcType=TIMESTAMP},
+      Summary = #{summary,jdbcType=LONGVARCHAR},
+      TagCloud = #{tagcloud,jdbcType=LONGVARCHAR}
+    where AutID = #{autid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select AutID, SurName, GivenName, Initials, UpdTime, AbbrName, Alias, TagCloud_UpdTime, 
+    Summary, TagCloud
+    from core_AuthorExtra
+    where AutID = #{autid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select AutID, SurName, GivenName, Initials, UpdTime, AbbrName, Alias, TagCloud_UpdTime, 
+    Summary, TagCloud
+    from core_AuthorExtra
+  </select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreRAutOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreRAutOrg" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="OrgID" property="orgid" jdbcType="VARCHAR" />
+    <result column="AutID" property="autid" jdbcType="VARCHAR" />
+    <result column="Job" property="job" jdbcType="VARCHAR" />
+    <result column="StartDate" property="startdate" jdbcType="DATE" />
+    <result column="EndDate" property="enddate" jdbcType="DATE" />
+    <result column="IsValid" property="isvalid" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_R_Aut_Org
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreRAutOrg" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_R_Aut_Org (OrgID, AutID, Job, 
+      StartDate, EndDate, IsValid)
+    values (#{orgid,jdbcType=VARCHAR}, #{autid,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, 
+      #{startdate,jdbcType=DATE}, #{enddate,jdbcType=DATE}, #{isvalid,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreRAutOrg" >
+    update core_R_Aut_Org
+    set OrgID = #{orgid,jdbcType=VARCHAR},
+      AutID = #{autid,jdbcType=VARCHAR},
+      Job = #{job,jdbcType=VARCHAR},
+      StartDate = #{startdate,jdbcType=DATE},
+      EndDate = #{enddate,jdbcType=DATE},
+      IsValid = #{isvalid,jdbcType=BIT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, OrgID, AutID, Job, StartDate, EndDate, IsValid
+    from core_R_Aut_Org
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, OrgID, AutID, Job, StartDate, EndDate, IsValid
+    from core_R_Aut_Org
+  </select>
+</mapper>

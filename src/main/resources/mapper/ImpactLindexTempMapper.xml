@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scholar.mapper.ImpactLindexTempMapper">
+  <resultMap id="BaseResultMap" type="com.scholar.entity.ImpactLindexTemp">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="L-index" jdbcType="INTEGER" property="lIndex" />
+    <result column="start_year" jdbcType="INTEGER" property="startYear" />
+    <result column="no10" jdbcType="INTEGER" property="no10" />
+    <result column="no9" jdbcType="INTEGER" property="no9" />
+    <result column="no8" jdbcType="INTEGER" property="no8" />
+    <result column="no7" jdbcType="INTEGER" property="no7" />
+    <result column="no6" jdbcType="INTEGER" property="no6" />
+    <result column="no5" jdbcType="INTEGER" property="no5" />
+    <result column="no4" jdbcType="INTEGER" property="no4" />
+    <result column="no3" jdbcType="INTEGER" property="no3" />
+    <result column="no2" jdbcType="INTEGER" property="no2" />
+    <result column="no1" jdbcType="INTEGER" property="no1" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from impact_lindex_temp
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.ImpactLindexTemp">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into impact_lindex_temp (aid, L-index, start_year, 
+      no10, no9, no8, no7, 
+      no6, no5, no4, no3, 
+      no2, no1)
+    values (#{aid,jdbcType=INTEGER}, #{lIndex,jdbcType=INTEGER}, #{startYear,jdbcType=INTEGER}, 
+      #{no10,jdbcType=INTEGER}, #{no9,jdbcType=INTEGER}, #{no8,jdbcType=INTEGER}, #{no7,jdbcType=INTEGER}, 
+      #{no6,jdbcType=INTEGER}, #{no5,jdbcType=INTEGER}, #{no4,jdbcType=INTEGER}, #{no3,jdbcType=INTEGER}, 
+      #{no2,jdbcType=INTEGER}, #{no1,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.ImpactLindexTemp">
+    update impact_lindex_temp
+    set aid = #{aid,jdbcType=INTEGER},
+      L-index = #{lIndex,jdbcType=INTEGER},
+      start_year = #{startYear,jdbcType=INTEGER},
+      no10 = #{no10,jdbcType=INTEGER},
+      no9 = #{no9,jdbcType=INTEGER},
+      no8 = #{no8,jdbcType=INTEGER},
+      no7 = #{no7,jdbcType=INTEGER},
+      no6 = #{no6,jdbcType=INTEGER},
+      no5 = #{no5,jdbcType=INTEGER},
+      no4 = #{no4,jdbcType=INTEGER},
+      no3 = #{no3,jdbcType=INTEGER},
+      no2 = #{no2,jdbcType=INTEGER},
+      no1 = #{no1,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, aid, L-index, start_year, no10, no9, no8, no7, no6, no5, no4, no3, no2, 
+    no1
+    from impact_lindex_temp
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, aid, L-index, start_year, no10, no9, no8, no7, no6, no5, no4, no3, no2, 
+    no1
+    from impact_lindex_temp
+  </select>
+</mapper>

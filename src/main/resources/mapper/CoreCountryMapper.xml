@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreCountryMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreCountry" >
+    <id column="CnyID" property="cnyid" jdbcType="VARCHAR" />
+    <result column="RgnID" property="rgnid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Country
+    where CnyID = #{cnyid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreCountry" >
+    insert into core_Country (CnyID, RgnID, Name, 
+      City)
+    values (#{cnyid,jdbcType=VARCHAR}, #{rgnid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreCountry" >
+    update core_Country
+    set RgnID = #{rgnid,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      City = #{city,jdbcType=VARCHAR}
+    where CnyID = #{cnyid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select CnyID, RgnID, Name, City
+    from core_Country
+    where CnyID = #{cnyid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select CnyID, RgnID, Name, City
+    from core_Country
+  </select>
+</mapper>

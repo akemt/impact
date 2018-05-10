@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreSynonymMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreSynonym" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="Keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="SynKeyword" property="synkeyword" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Synonym
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreSynonym" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_Synonym (Keyword, SynKeyword)
+    values (#{keyword,jdbcType=VARCHAR}, #{synkeyword,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreSynonym" >
+    update core_Synonym
+    set Keyword = #{keyword,jdbcType=VARCHAR},
+      SynKeyword = #{synkeyword,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, Keyword, SynKeyword
+    from core_Synonym
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, Keyword, SynKeyword
+    from core_Synonym
+  </select>
+</mapper>

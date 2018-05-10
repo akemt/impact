@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreRPaperkeywordMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreRPaperkeyword" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="cor_Keyword" property="corKeyword" jdbcType="VARCHAR" />
+    <result column="Keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="Rank" property="rank" jdbcType="SMALLINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_R_PaperKeyword
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreRPaperkeyword" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_R_PaperKeyword (PapID, cor_Keyword, Keyword, 
+      Rank)
+    values (#{papid,jdbcType=VARCHAR}, #{corKeyword,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, 
+      #{rank,jdbcType=SMALLINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreRPaperkeyword" >
+    update core_R_PaperKeyword
+    set PapID = #{papid,jdbcType=VARCHAR},
+      cor_Keyword = #{corKeyword,jdbcType=VARCHAR},
+      Keyword = #{keyword,jdbcType=VARCHAR},
+      Rank = #{rank,jdbcType=SMALLINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PapID, cor_Keyword, Keyword, Rank
+    from core_R_PaperKeyword
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PapID, cor_Keyword, Keyword, Rank
+    from core_R_PaperKeyword
+  </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePaperfileMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePaperfile" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="PaperUrl" property="paperurl" jdbcType="VARCHAR" />
+    <result column="StoreUrl" property="storeurl" jdbcType="VARCHAR" />
+    <result column="StoreTime" property="storetime" jdbcType="TIMESTAMP" />
+    <result column="FileCRC" property="filecrc" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_PaperFile
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePaperfile" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_PaperFile (PapID, PaperUrl, StoreUrl, 
+      StoreTime, FileCRC)
+    values (#{papid,jdbcType=VARCHAR}, #{paperurl,jdbcType=VARCHAR}, #{storeurl,jdbcType=VARCHAR}, 
+      #{storetime,jdbcType=TIMESTAMP}, #{filecrc,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePaperfile" >
+    update core_PaperFile
+    set PapID = #{papid,jdbcType=VARCHAR},
+      PaperUrl = #{paperurl,jdbcType=VARCHAR},
+      StoreUrl = #{storeurl,jdbcType=VARCHAR},
+      StoreTime = #{storetime,jdbcType=TIMESTAMP},
+      FileCRC = #{filecrc,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PapID, PaperUrl, StoreUrl, StoreTime, FileCRC
+    from core_PaperFile
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PapID, PaperUrl, StoreUrl, StoreTime, FileCRC
+    from core_PaperFile
+  </select>
+</mapper>

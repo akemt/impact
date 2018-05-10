@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePaperextraMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePaperextra" >
+    <id column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="ISSN" property="issn" jdbcType="VARCHAR" />
+    <result column="ElsISSN" property="elsissn" jdbcType="VARCHAR" />
+    <result column="ISBN" property="isbn" jdbcType="VARCHAR" />
+    <result column="UpdTime" property="updtime" jdbcType="TIMESTAMP" />
+    <result column="Bibtex" property="bibtex" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_PaperExtra
+    where PapID = #{papid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePaperextra" >
+    insert into core_PaperExtra (PapID, ISSN, ElsISSN, 
+      ISBN, UpdTime, Bibtex
+      )
+    values (#{papid,jdbcType=VARCHAR}, #{issn,jdbcType=VARCHAR}, #{elsissn,jdbcType=VARCHAR}, 
+      #{isbn,jdbcType=VARCHAR}, #{updtime,jdbcType=TIMESTAMP}, #{bibtex,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePaperextra" >
+    update core_PaperExtra
+    set ISSN = #{issn,jdbcType=VARCHAR},
+      ElsISSN = #{elsissn,jdbcType=VARCHAR},
+      ISBN = #{isbn,jdbcType=VARCHAR},
+      UpdTime = #{updtime,jdbcType=TIMESTAMP},
+      Bibtex = #{bibtex,jdbcType=LONGVARCHAR}
+    where PapID = #{papid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select PapID, ISSN, ElsISSN, ISBN, UpdTime, Bibtex
+    from core_PaperExtra
+    where PapID = #{papid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PapID, ISSN, ElsISSN, ISBN, UpdTime, Bibtex
+    from core_PaperExtra
+  </select>
+</mapper>

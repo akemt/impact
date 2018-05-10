@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreRPapAutOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreRPapAutOrg" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="AutID" property="autid" jdbcType="VARCHAR" />
+    <result column="AutRank" property="autrank" jdbcType="SMALLINT" />
+    <result column="OrgID" property="orgid" jdbcType="VARCHAR" />
+    <result column="orgRank" property="orgrank" jdbcType="SMALLINT" />
+    <result column="dr_PapTitle" property="drPaptitle" jdbcType="VARCHAR" />
+    <result column="dr_AutName" property="drAutname" jdbcType="VARCHAR" />
+    <result column="dr_OrgName" property="drOrgname" jdbcType="VARCHAR" />
+    <result column="InsTime" property="instime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_R_Pap_Aut_Org
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreRPapAutOrg" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_R_Pap_Aut_Org (PapID, AutID, AutRank, 
+      OrgID, orgRank, dr_PapTitle, 
+      dr_AutName, dr_OrgName, InsTime
+      )
+    values (#{papid,jdbcType=VARCHAR}, #{autid,jdbcType=VARCHAR}, #{autrank,jdbcType=SMALLINT}, 
+      #{orgid,jdbcType=VARCHAR}, #{orgrank,jdbcType=SMALLINT}, #{drPaptitle,jdbcType=VARCHAR}, 
+      #{drAutname,jdbcType=VARCHAR}, #{drOrgname,jdbcType=VARCHAR}, #{instime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreRPapAutOrg" >
+    update core_R_Pap_Aut_Org
+    set PapID = #{papid,jdbcType=VARCHAR},
+      AutID = #{autid,jdbcType=VARCHAR},
+      AutRank = #{autrank,jdbcType=SMALLINT},
+      OrgID = #{orgid,jdbcType=VARCHAR},
+      orgRank = #{orgrank,jdbcType=SMALLINT},
+      dr_PapTitle = #{drPaptitle,jdbcType=VARCHAR},
+      dr_AutName = #{drAutname,jdbcType=VARCHAR},
+      dr_OrgName = #{drOrgname,jdbcType=VARCHAR},
+      InsTime = #{instime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PapID, AutID, AutRank, OrgID, orgRank, dr_PapTitle, dr_AutName, dr_OrgName, 
+    InsTime
+    from core_R_Pap_Aut_Org
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PapID, AutID, AutRank, OrgID, orgRank, dr_PapTitle, dr_AutName, dr_OrgName, 
+    InsTime
+    from core_R_Pap_Aut_Org
+  </select>
+</mapper>

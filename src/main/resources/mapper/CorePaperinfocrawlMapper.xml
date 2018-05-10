@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePaperinfocrawlMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePaperinfocrawl" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="CitedCnt" property="citedcnt" jdbcType="BIGINT" />
+    <result column="AutCnt" property="autcnt" jdbcType="SMALLINT" />
+    <result column="AutList" property="autlist" jdbcType="VARCHAR" />
+    <result column="Src" property="src" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_PaperInfoCrawl
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePaperinfocrawl" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_PaperInfoCrawl (PapID, CitedCnt, AutCnt, 
+      AutList, Src)
+    values (#{papid,jdbcType=VARCHAR}, #{citedcnt,jdbcType=BIGINT}, #{autcnt,jdbcType=SMALLINT}, 
+      #{autlist,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePaperinfocrawl" >
+    update core_PaperInfoCrawl
+    set PapID = #{papid,jdbcType=VARCHAR},
+      CitedCnt = #{citedcnt,jdbcType=BIGINT},
+      AutCnt = #{autcnt,jdbcType=SMALLINT},
+      AutList = #{autlist,jdbcType=VARCHAR},
+      Src = #{src,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PapID, CitedCnt, AutCnt, AutList, Src
+    from core_PaperInfoCrawl
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PapID, CitedCnt, AutCnt, AutList, Src
+    from core_PaperInfoCrawl
+  </select>
+</mapper>

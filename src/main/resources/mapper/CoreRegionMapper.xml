@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreRegionMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreRegion" >
+    <id column="RgnID" property="rgnid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Region
+    where RgnID = #{rgnid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreRegion" >
+    insert into core_Region (RgnID, Name)
+    values (#{rgnid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreRegion" >
+    update core_Region
+    set Name = #{name,jdbcType=VARCHAR}
+    where RgnID = #{rgnid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select RgnID, Name
+    from core_Region
+    where RgnID = #{rgnid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select RgnID, Name
+    from core_Region
+  </select>
+</mapper>

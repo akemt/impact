@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePapertypeMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePapertype" >
+    <id column="PtpID" property="ptpid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_PaperType
+    where PtpID = #{ptpid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePapertype" >
+    insert into core_PaperType (PtpID, Name)
+    values (#{ptpid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePapertype" >
+    update core_PaperType
+    set Name = #{name,jdbcType=VARCHAR}
+    where PtpID = #{ptpid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select PtpID, Name
+    from core_PaperType
+    where PtpID = #{ptpid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PtpID, Name
+    from core_PaperType
+  </select>
+</mapper>

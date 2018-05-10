@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePublicationMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePublication" >
+    <id column="PubID" property="pubid" jdbcType="VARCHAR" />
+    <result column="CnyID" property="cnyid" jdbcType="VARCHAR" />
+    <result column="PbsID" property="pbsid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="AbbrName" property="abbrname" jdbcType="VARCHAR" />
+    <result column="AnnualCnt" property="annualcnt" jdbcType="SMALLINT" />
+    <result column="ISBN" property="isbn" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Publication
+    where PubID = #{pubid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePublication" >
+    insert into core_Publication (PubID, CnyID, PbsID, 
+      Name, AbbrName, AnnualCnt, 
+      ISBN)
+    values (#{pubid,jdbcType=VARCHAR}, #{cnyid,jdbcType=VARCHAR}, #{pbsid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{abbrname,jdbcType=VARCHAR}, #{annualcnt,jdbcType=SMALLINT}, 
+      #{isbn,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePublication" >
+    update core_Publication
+    set CnyID = #{cnyid,jdbcType=VARCHAR},
+      PbsID = #{pbsid,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      AbbrName = #{abbrname,jdbcType=VARCHAR},
+      AnnualCnt = #{annualcnt,jdbcType=SMALLINT},
+      ISBN = #{isbn,jdbcType=VARCHAR}
+    where PubID = #{pubid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select PubID, CnyID, PbsID, Name, AbbrName, AnnualCnt, ISBN
+    from core_Publication
+    where PubID = #{pubid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PubID, CnyID, PbsID, Name, AbbrName, AnnualCnt, ISBN
+    from core_Publication
+  </select>
+</mapper>

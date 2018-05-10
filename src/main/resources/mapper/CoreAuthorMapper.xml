@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreAuthorMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreAuthor" >
+    <id column="AutID" property="autid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="ImgUrl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="dr_curOrgName" property="drCurorgname" jdbcType="VARCHAR" />
+    <result column="dr_curOrgID" property="drCurorgid" jdbcType="VARCHAR" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+    <result column="PortalUrl" property="portalurl" jdbcType="VARCHAR" />
+    <result column="PaperListUrl" property="paperlisturl" jdbcType="VARCHAR" />
+    <result column="InsTime" property="instime" jdbcType="TIMESTAMP" />
+    <result column="UpdTime" property="updtime" jdbcType="TIMESTAMP" />
+    <result column="ElsAutID" property="elsautid" jdbcType="VARCHAR" />
+    <result column="ElsOrgID" property="elsorgid" jdbcType="VARCHAR" />
+    <result column="Flag" property="flag" jdbcType="SMALLINT" />
+    <result column="Pic" property="pic" jdbcType="SMALLINT" />
+    <result column="dr_CitedCnt" property="drCitedcnt" jdbcType="BIGINT" />
+    <result column="CitedCnt_UpdTime" property="citedcntUpdtime" jdbcType="TIMESTAMP" />
+    <result column="dr_PaperCnt" property="drPapercnt" jdbcType="BIGINT" />
+    <result column="PaperCnt_UpdTime" property="papercntUpdtime" jdbcType="TIMESTAMP" />
+    <result column="dr_FirstAutCnt" property="drFirstautcnt" jdbcType="BIGINT" />
+    <result column="FirstAutCnt_UpdTime" property="firstautcntUpdtime" jdbcType="TIMESTAMP" />
+    <result column="dr_CorrpAutCnt" property="drCorrpautcnt" jdbcType="BIGINT" />
+    <result column="CorrpAutCnt_UpdTime" property="corrpautcntUpdtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Author
+    where AutID = #{autid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreAuthor" >
+    insert into core_Author (AutID, Name, ImgUrl, 
+      dr_curOrgName, dr_curOrgID, Address, 
+      Email, PortalUrl, PaperListUrl, 
+      InsTime, UpdTime, ElsAutID, 
+      ElsOrgID, Flag, Pic, 
+      dr_CitedCnt, CitedCnt_UpdTime, dr_PaperCnt, 
+      PaperCnt_UpdTime, dr_FirstAutCnt, FirstAutCnt_UpdTime, 
+      dr_CorrpAutCnt, CorrpAutCnt_UpdTime)
+    values (#{autid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
+      #{drCurorgname,jdbcType=VARCHAR}, #{drCurorgid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{portalurl,jdbcType=VARCHAR}, #{paperlisturl,jdbcType=VARCHAR}, 
+      #{instime,jdbcType=TIMESTAMP}, #{updtime,jdbcType=TIMESTAMP}, #{elsautid,jdbcType=VARCHAR}, 
+      #{elsorgid,jdbcType=VARCHAR}, #{flag,jdbcType=SMALLINT}, #{pic,jdbcType=SMALLINT}, 
+      #{drCitedcnt,jdbcType=BIGINT}, #{citedcntUpdtime,jdbcType=TIMESTAMP}, #{drPapercnt,jdbcType=BIGINT}, 
+      #{papercntUpdtime,jdbcType=TIMESTAMP}, #{drFirstautcnt,jdbcType=BIGINT}, #{firstautcntUpdtime,jdbcType=TIMESTAMP}, 
+      #{drCorrpautcnt,jdbcType=BIGINT}, #{corrpautcntUpdtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreAuthor" >
+    update core_Author
+    set Name = #{name,jdbcType=VARCHAR},
+      ImgUrl = #{imgurl,jdbcType=VARCHAR},
+      dr_curOrgName = #{drCurorgname,jdbcType=VARCHAR},
+      dr_curOrgID = #{drCurorgid,jdbcType=VARCHAR},
+      Address = #{address,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      PortalUrl = #{portalurl,jdbcType=VARCHAR},
+      PaperListUrl = #{paperlisturl,jdbcType=VARCHAR},
+      InsTime = #{instime,jdbcType=TIMESTAMP},
+      UpdTime = #{updtime,jdbcType=TIMESTAMP},
+      ElsAutID = #{elsautid,jdbcType=VARCHAR},
+      ElsOrgID = #{elsorgid,jdbcType=VARCHAR},
+      Flag = #{flag,jdbcType=SMALLINT},
+      Pic = #{pic,jdbcType=SMALLINT},
+      dr_CitedCnt = #{drCitedcnt,jdbcType=BIGINT},
+      CitedCnt_UpdTime = #{citedcntUpdtime,jdbcType=TIMESTAMP},
+      dr_PaperCnt = #{drPapercnt,jdbcType=BIGINT},
+      PaperCnt_UpdTime = #{papercntUpdtime,jdbcType=TIMESTAMP},
+      dr_FirstAutCnt = #{drFirstautcnt,jdbcType=BIGINT},
+      FirstAutCnt_UpdTime = #{firstautcntUpdtime,jdbcType=TIMESTAMP},
+      dr_CorrpAutCnt = #{drCorrpautcnt,jdbcType=BIGINT},
+      CorrpAutCnt_UpdTime = #{corrpautcntUpdtime,jdbcType=TIMESTAMP}
+    where AutID = #{autid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select AutID, Name, ImgUrl, dr_curOrgName, dr_curOrgID, Address, Email, PortalUrl, 
+    PaperListUrl, InsTime, UpdTime, ElsAutID, ElsOrgID, Flag, Pic, dr_CitedCnt, CitedCnt_UpdTime, 
+    dr_PaperCnt, PaperCnt_UpdTime, dr_FirstAutCnt, FirstAutCnt_UpdTime, dr_CorrpAutCnt, 
+    CorrpAutCnt_UpdTime
+    from core_Author
+    where AutID = #{autid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select AutID, Name, ImgUrl, dr_curOrgName, dr_curOrgID, Address, Email, PortalUrl, 
+    PaperListUrl, InsTime, UpdTime, ElsAutID, ElsOrgID, Flag, Pic, dr_CitedCnt, CitedCnt_UpdTime, 
+    dr_PaperCnt, PaperCnt_UpdTime, dr_FirstAutCnt, FirstAutCnt_UpdTime, dr_CorrpAutCnt, 
+    CorrpAutCnt_UpdTime
+    from core_Author
+  </select>
+</mapper>

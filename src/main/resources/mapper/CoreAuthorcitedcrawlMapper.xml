@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreAuthorcitedcrawlMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreAuthorcitedcrawl" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="AutID" property="autid" jdbcType="VARCHAR" />
+    <result column="CitedCnt" property="citedcnt" jdbcType="BIGINT" />
+    <result column="Src" property="src" jdbcType="VARCHAR" />
+    <result column="UpdTime" property="updtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_AuthorCitedCrawl
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreAuthorcitedcrawl" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_AuthorCitedCrawl (AutID, CitedCnt, Src, 
+      UpdTime)
+    values (#{autid,jdbcType=VARCHAR}, #{citedcnt,jdbcType=BIGINT}, #{src,jdbcType=VARCHAR}, 
+      #{updtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreAuthorcitedcrawl" >
+    update core_AuthorCitedCrawl
+    set AutID = #{autid,jdbcType=VARCHAR},
+      CitedCnt = #{citedcnt,jdbcType=BIGINT},
+      Src = #{src,jdbcType=VARCHAR},
+      UpdTime = #{updtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, AutID, CitedCnt, Src, UpdTime
+    from core_AuthorCitedCrawl
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, AutID, CitedCnt, Src, UpdTime
+    from core_AuthorCitedCrawl
+  </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreKeywordinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreKeywordinfo" >
+    <id column="Keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="ZhnName" property="zhnname" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_KeywordInfo
+    where Keyword = #{keyword,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreKeywordinfo" >
+    insert into core_KeywordInfo (Keyword, ZhnName)
+    values (#{keyword,jdbcType=VARCHAR}, #{zhnname,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreKeywordinfo" >
+    update core_KeywordInfo
+    set ZhnName = #{zhnname,jdbcType=VARCHAR}
+    where Keyword = #{keyword,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select Keyword, ZhnName
+    from core_KeywordInfo
+    where Keyword = #{keyword,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select Keyword, ZhnName
+    from core_KeywordInfo
+  </select>
+</mapper>

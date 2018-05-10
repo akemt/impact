@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePubifMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePubif" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PubID" property="pubid" jdbcType="VARCHAR" />
+    <result column="dr_PubName" property="drPubname" jdbcType="VARCHAR" />
+    <result column="YearID" property="yearid" jdbcType="INTEGER" />
+    <result column="IFactor" property="ifactor" jdbcType="DECIMAL" />
+    <result column="Updtime" property="updtime" jdbcType="TIMESTAMP" />
+    <result column="Src" property="src" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_PubIF
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePubif" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_PubIF (PubID, dr_PubName, YearID, 
+      IFactor, Updtime, Src
+      )
+    values (#{pubid,jdbcType=VARCHAR}, #{drPubname,jdbcType=VARCHAR}, #{yearid,jdbcType=INTEGER}, 
+      #{ifactor,jdbcType=DECIMAL}, #{updtime,jdbcType=TIMESTAMP}, #{src,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePubif" >
+    update core_PubIF
+    set PubID = #{pubid,jdbcType=VARCHAR},
+      dr_PubName = #{drPubname,jdbcType=VARCHAR},
+      YearID = #{yearid,jdbcType=INTEGER},
+      IFactor = #{ifactor,jdbcType=DECIMAL},
+      Updtime = #{updtime,jdbcType=TIMESTAMP},
+      Src = #{src,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PubID, dr_PubName, YearID, IFactor, Updtime, Src
+    from core_PubIF
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PubID, dr_PubName, YearID, IFactor, Updtime, Src
+    from core_PubIF
+  </select>
+</mapper>

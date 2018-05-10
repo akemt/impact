@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePaperaltmetriccrawlMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePaperaltmetriccrawl" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="mendeley_readers" property="mendeleyReaders" jdbcType="BIGINT" />
+    <result column="scopus_citiaions" property="scopusCitiaions" jdbcType="BIGINT" />
+    <result column="citeulike_bookmarks" property="citeulikeBookmarks" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_posts_count" property="altmeticComCitedByPostsCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_accounts_count" property="altmeticComCitedByAccountsCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_tweeters_count" property="altmeticComCitedByTweetersCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_gplus_count" property="altmeticComCitedByGplusCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_feeds_count" property="altmeticComCitedByFeedsCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_fbwals_count" property="altmeticComCitedByFbwalsCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_cited_by_readers_count" property="altmeticComCitedByReadersCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_readers_count" property="altmeticComReadersCount" jdbcType="BIGINT" />
+    <result column="altmetic_com_blog_posts" property="altmeticComBlogPosts" jdbcType="BIGINT" />
+    <result column="altmetic_com_facebook_posts" property="altmeticComFacebookPosts" jdbcType="BIGINT" />
+    <result column="altmetic_com_gplus_posts" property="altmeticComGplusPosts" jdbcType="BIGINT" />
+    <result column="plosalm_pdf_views" property="plosalmPdfViews" jdbcType="BIGINT" />
+    <result column="plosalm_html_views" property="plosalmHtmlViews" jdbcType="BIGINT" />
+    <result column="wikipedia_mentions" property="wikipediaMentions" jdbcType="BIGINT" />
+    <result column="journal_impact" property="journalImpact" jdbcType="DECIMAL" />
+    <result column="Updtime" property="updtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_PaperAltmetricCrawl
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePaperaltmetriccrawl" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into core_PaperAltmetricCrawl (PapID, mendeley_readers, scopus_citiaions, 
+      citeulike_bookmarks, altmetic_com_cited_by_posts_count, 
+      altmetic_com_cited_by_accounts_count, altmetic_com_cited_by_tweeters_count, 
+      altmetic_com_cited_by_gplus_count, altmetic_com_cited_by_feeds_count, 
+      altmetic_com_cited_by_fbwals_count, altmetic_com_cited_by_readers_count, 
+      altmetic_com_readers_count, altmetic_com_blog_posts, 
+      altmetic_com_facebook_posts, altmetic_com_gplus_posts, 
+      plosalm_pdf_views, plosalm_html_views, wikipedia_mentions, 
+      journal_impact, Updtime)
+    values (#{papid,jdbcType=VARCHAR}, #{mendeleyReaders,jdbcType=BIGINT}, #{scopusCitiaions,jdbcType=BIGINT}, 
+      #{citeulikeBookmarks,jdbcType=BIGINT}, #{altmeticComCitedByPostsCount,jdbcType=BIGINT}, 
+      #{altmeticComCitedByAccountsCount,jdbcType=BIGINT}, #{altmeticComCitedByTweetersCount,jdbcType=BIGINT}, 
+      #{altmeticComCitedByGplusCount,jdbcType=BIGINT}, #{altmeticComCitedByFeedsCount,jdbcType=BIGINT}, 
+      #{altmeticComCitedByFbwalsCount,jdbcType=BIGINT}, #{altmeticComCitedByReadersCount,jdbcType=BIGINT}, 
+      #{altmeticComReadersCount,jdbcType=BIGINT}, #{altmeticComBlogPosts,jdbcType=BIGINT}, 
+      #{altmeticComFacebookPosts,jdbcType=BIGINT}, #{altmeticComGplusPosts,jdbcType=BIGINT}, 
+      #{plosalmPdfViews,jdbcType=BIGINT}, #{plosalmHtmlViews,jdbcType=BIGINT}, #{wikipediaMentions,jdbcType=BIGINT}, 
+      #{journalImpact,jdbcType=DECIMAL}, #{updtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePaperaltmetriccrawl" >
+    update core_PaperAltmetricCrawl
+    set PapID = #{papid,jdbcType=VARCHAR},
+      mendeley_readers = #{mendeleyReaders,jdbcType=BIGINT},
+      scopus_citiaions = #{scopusCitiaions,jdbcType=BIGINT},
+      citeulike_bookmarks = #{citeulikeBookmarks,jdbcType=BIGINT},
+      altmetic_com_cited_by_posts_count = #{altmeticComCitedByPostsCount,jdbcType=BIGINT},
+      altmetic_com_cited_by_accounts_count = #{altmeticComCitedByAccountsCount,jdbcType=BIGINT},
+      altmetic_com_cited_by_tweeters_count = #{altmeticComCitedByTweetersCount,jdbcType=BIGINT},
+      altmetic_com_cited_by_gplus_count = #{altmeticComCitedByGplusCount,jdbcType=BIGINT},
+      altmetic_com_cited_by_feeds_count = #{altmeticComCitedByFeedsCount,jdbcType=BIGINT},
+      altmetic_com_cited_by_fbwals_count = #{altmeticComCitedByFbwalsCount,jdbcType=BIGINT},
+      altmetic_com_cited_by_readers_count = #{altmeticComCitedByReadersCount,jdbcType=BIGINT},
+      altmetic_com_readers_count = #{altmeticComReadersCount,jdbcType=BIGINT},
+      altmetic_com_blog_posts = #{altmeticComBlogPosts,jdbcType=BIGINT},
+      altmetic_com_facebook_posts = #{altmeticComFacebookPosts,jdbcType=BIGINT},
+      altmetic_com_gplus_posts = #{altmeticComGplusPosts,jdbcType=BIGINT},
+      plosalm_pdf_views = #{plosalmPdfViews,jdbcType=BIGINT},
+      plosalm_html_views = #{plosalmHtmlViews,jdbcType=BIGINT},
+      wikipedia_mentions = #{wikipediaMentions,jdbcType=BIGINT},
+      journal_impact = #{journalImpact,jdbcType=DECIMAL},
+      Updtime = #{updtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select ID, PapID, mendeley_readers, scopus_citiaions, citeulike_bookmarks, altmetic_com_cited_by_posts_count, 
+    altmetic_com_cited_by_accounts_count, altmetic_com_cited_by_tweeters_count, altmetic_com_cited_by_gplus_count, 
+    altmetic_com_cited_by_feeds_count, altmetic_com_cited_by_fbwals_count, altmetic_com_cited_by_readers_count, 
+    altmetic_com_readers_count, altmetic_com_blog_posts, altmetic_com_facebook_posts, 
+    altmetic_com_gplus_posts, plosalm_pdf_views, plosalm_html_views, wikipedia_mentions, 
+    journal_impact, Updtime
+    from core_PaperAltmetricCrawl
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select ID, PapID, mendeley_readers, scopus_citiaions, citeulike_bookmarks, altmetic_com_cited_by_posts_count, 
+    altmetic_com_cited_by_accounts_count, altmetic_com_cited_by_tweeters_count, altmetic_com_cited_by_gplus_count, 
+    altmetic_com_cited_by_feeds_count, altmetic_com_cited_by_fbwals_count, altmetic_com_cited_by_readers_count, 
+    altmetic_com_readers_count, altmetic_com_blog_posts, altmetic_com_facebook_posts, 
+    altmetic_com_gplus_posts, plosalm_pdf_views, plosalm_html_views, wikipedia_mentions, 
+    journal_impact, Updtime
+    from core_PaperAltmetricCrawl
+  </select>
+</mapper>

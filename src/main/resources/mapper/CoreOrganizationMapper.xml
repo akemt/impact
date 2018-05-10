@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CoreOrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CoreOrganization" >
+    <id column="OrgID" property="orgid" jdbcType="VARCHAR" />
+    <result column="CnyID" property="cnyid" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="AbbrName" property="abbrname" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="Abstract" property="abstract" jdbcType="VARCHAR" />
+    <result column="ImgUrl" property="imgurl" jdbcType="VARCHAR" />
+    <result column="Alias" property="alias" jdbcType="VARCHAR" />
+    <result column="PortalUrl" property="portalurl" jdbcType="VARCHAR" />
+    <result column="dr_CountryName" property="drCountryname" jdbcType="VARCHAR" />
+    <result column="UpdTime" property="updtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Organization
+    where OrgID = #{orgid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CoreOrganization" >
+    insert into core_Organization (OrgID, CnyID, Name, 
+      AbbrName, City, Abstract, 
+      ImgUrl, Alias, PortalUrl, 
+      dr_CountryName, UpdTime)
+    values (#{orgid,jdbcType=VARCHAR}, #{cnyid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{abbrname,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{abstract,jdbcType=VARCHAR}, 
+      #{imgurl,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{portalurl,jdbcType=VARCHAR}, 
+      #{drCountryname,jdbcType=VARCHAR}, #{updtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CoreOrganization" >
+    update core_Organization
+    set CnyID = #{cnyid,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      AbbrName = #{abbrname,jdbcType=VARCHAR},
+      City = #{city,jdbcType=VARCHAR},
+      Abstract = #{abstract,jdbcType=VARCHAR},
+      ImgUrl = #{imgurl,jdbcType=VARCHAR},
+      Alias = #{alias,jdbcType=VARCHAR},
+      PortalUrl = #{portalurl,jdbcType=VARCHAR},
+      dr_CountryName = #{drCountryname,jdbcType=VARCHAR},
+      UpdTime = #{updtime,jdbcType=TIMESTAMP}
+    where OrgID = #{orgid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select OrgID, CnyID, Name, AbbrName, City, Abstract, ImgUrl, Alias, PortalUrl, dr_CountryName, 
+    UpdTime
+    from core_Organization
+    where OrgID = #{orgid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select OrgID, CnyID, Name, AbbrName, City, Abstract, ImgUrl, Alias, PortalUrl, dr_CountryName, 
+    UpdTime
+    from core_Organization
+  </select>
+</mapper>

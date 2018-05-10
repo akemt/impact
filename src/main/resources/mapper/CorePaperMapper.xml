@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scholar.mapper.CorePaperMapper" >
+  <resultMap id="BaseResultMap" type="com.scholar.entity.CorePaper" >
+    <id column="PapID" property="papid" jdbcType="VARCHAR" />
+    <result column="PubID" property="pubid" jdbcType="VARCHAR" />
+    <result column="PtpID" property="ptpid" jdbcType="VARCHAR" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="Abstract" property="abstract" jdbcType="VARCHAR" />
+    <result column="YearID" property="yearid" jdbcType="INTEGER" />
+    <result column="Keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="DOI" property="doi" jdbcType="VARCHAR" />
+    <result column="Volume" property="volume" jdbcType="VARCHAR" />
+    <result column="Issue" property="issue" jdbcType="VARCHAR" />
+    <result column="Page" property="page" jdbcType="VARCHAR" />
+    <result column="ElsPapID" property="elspapid" jdbcType="VARCHAR" />
+    <result column="MD5Code" property="md5code" jdbcType="VARCHAR" />
+    <result column="Gid" property="gid" jdbcType="VARCHAR" />
+    <result column="Src" property="src" jdbcType="VARCHAR" />
+    <result column="Proof" property="proof" jdbcType="BIGINT" />
+    <result column="Weight" property="weight" jdbcType="BIGINT" />
+    <result column="Instime" property="instime" jdbcType="TIMESTAMP" />
+    <result column="Updtime" property="updtime" jdbcType="TIMESTAMP" />
+    <result column="dr_Publisher" property="drPublisher" jdbcType="VARCHAR" />
+    <result column="dr_Venue" property="drVenue" jdbcType="VARCHAR" />
+    <result column="dr_VenueType" property="drVenuetype" jdbcType="VARCHAR" />
+    <result column="dr_CitedCnt" property="drCitedcnt" jdbcType="BIGINT" />
+    <result column="CitedCnt_UpdTime" property="citedcntUpdtime" jdbcType="TIMESTAMP" />
+    <result column="dr_AutCnt" property="drAutcnt" jdbcType="INTEGER" />
+    <result column="dr_AutList" property="drAutlist" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from core_Paper
+    where PapID = #{papid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.scholar.entity.CorePaper" >
+    insert into core_Paper (PapID, PubID, PtpID, 
+      Title, Abstract, YearID, 
+      Keywords, DOI, Volume, 
+      Issue, Page, ElsPapID, 
+      MD5Code, Gid, Src, 
+      Proof, Weight, Instime, 
+      Updtime, dr_Publisher, dr_Venue, 
+      dr_VenueType, dr_CitedCnt, CitedCnt_UpdTime, 
+      dr_AutCnt, dr_AutList)
+    values (#{papid,jdbcType=VARCHAR}, #{pubid,jdbcType=VARCHAR}, #{ptpid,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{abstract,jdbcType=VARCHAR}, #{yearid,jdbcType=INTEGER}, 
+      #{keywords,jdbcType=VARCHAR}, #{doi,jdbcType=VARCHAR}, #{volume,jdbcType=VARCHAR}, 
+      #{issue,jdbcType=VARCHAR}, #{page,jdbcType=VARCHAR}, #{elspapid,jdbcType=VARCHAR}, 
+      #{md5code,jdbcType=VARCHAR}, #{gid,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR}, 
+      #{proof,jdbcType=BIGINT}, #{weight,jdbcType=BIGINT}, #{instime,jdbcType=TIMESTAMP}, 
+      #{updtime,jdbcType=TIMESTAMP}, #{drPublisher,jdbcType=VARCHAR}, #{drVenue,jdbcType=VARCHAR}, 
+      #{drVenuetype,jdbcType=VARCHAR}, #{drCitedcnt,jdbcType=BIGINT}, #{citedcntUpdtime,jdbcType=TIMESTAMP}, 
+      #{drAutcnt,jdbcType=INTEGER}, #{drAutlist,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.scholar.entity.CorePaper" >
+    update core_Paper
+    set PubID = #{pubid,jdbcType=VARCHAR},
+      PtpID = #{ptpid,jdbcType=VARCHAR},
+      Title = #{title,jdbcType=VARCHAR},
+      Abstract = #{abstract,jdbcType=VARCHAR},
+      YearID = #{yearid,jdbcType=INTEGER},
+      Keywords = #{keywords,jdbcType=VARCHAR},
+      DOI = #{doi,jdbcType=VARCHAR},
+      Volume = #{volume,jdbcType=VARCHAR},
+      Issue = #{issue,jdbcType=VARCHAR},
+      Page = #{page,jdbcType=VARCHAR},
+      ElsPapID = #{elspapid,jdbcType=VARCHAR},
+      MD5Code = #{md5code,jdbcType=VARCHAR},
+      Gid = #{gid,jdbcType=VARCHAR},
+      Src = #{src,jdbcType=VARCHAR},
+      Proof = #{proof,jdbcType=BIGINT},
+      Weight = #{weight,jdbcType=BIGINT},
+      Instime = #{instime,jdbcType=TIMESTAMP},
+      Updtime = #{updtime,jdbcType=TIMESTAMP},
+      dr_Publisher = #{drPublisher,jdbcType=VARCHAR},
+      dr_Venue = #{drVenue,jdbcType=VARCHAR},
+      dr_VenueType = #{drVenuetype,jdbcType=VARCHAR},
+      dr_CitedCnt = #{drCitedcnt,jdbcType=BIGINT},
+      CitedCnt_UpdTime = #{citedcntUpdtime,jdbcType=TIMESTAMP},
+      dr_AutCnt = #{drAutcnt,jdbcType=INTEGER},
+      dr_AutList = #{drAutlist,jdbcType=VARCHAR}
+    where PapID = #{papid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select PapID, PubID, PtpID, Title, Abstract, YearID, Keywords, DOI, Volume, Issue, 
+    Page, ElsPapID, MD5Code, Gid, Src, Proof, Weight, Instime, Updtime, dr_Publisher, 
+    dr_Venue, dr_VenueType, dr_CitedCnt, CitedCnt_UpdTime, dr_AutCnt, dr_AutList
+    from core_Paper
+    where PapID = #{papid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PapID, PubID, PtpID, Title, Abstract, YearID, Keywords, DOI, Volume, Issue, 
+    Page, ElsPapID, MD5Code, Gid, Src, Proof, Weight, Instime, Updtime, dr_Publisher, 
+    dr_Venue, dr_VenueType, dr_CitedCnt, CitedCnt_UpdTime, dr_AutCnt, dr_AutList
+    from core_Paper
+  </select>
+</mapper>
