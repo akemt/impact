@@ -62,7 +62,9 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public CoreAuthor getAuthorInfo(String aid) {
         CoreAuthor coreAuthor  = coreAuthorMapper.selectAuthorInfoByPrimaryKey(aid);
-        coreAuthor.setPic("/static/img/"+aid+".jpg");
+        if(coreAuthor !=null){
+            coreAuthor.setPic("/static/img/"+aid+".jpg");
+        }
 
         return coreAuthor;
     }

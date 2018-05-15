@@ -1,7 +1,9 @@
 package com.scholar.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.scholar.common.JsonUtil;
 import com.scholar.common.Success;
 import com.scholar.config.RedisClient;
 import com.scholar.entity.CoreAuthor;
@@ -9,10 +11,7 @@ import com.scholar.infra.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 榜单人员控制层
@@ -53,16 +52,16 @@ public class AuthorController {
         Map<String, Object> map = new HashMap<>();
 //        try {
 //            if (redisClinet.get("getAuthorImpactList") == null) {
-                //分页
-                PageHelper.startPage(page, size);
+        //分页
+        PageHelper.startPage(page, size);
 
-                Page<Map<String, Object>> mapPage = authorService.getAuthorImpactList(aid);
-                //        impactList.getPageNum();
-                //        impactList.getTotal();
-                //        impactList.getPages();
-                map.put("page", page);//第几页
-                map.put("total", mapPage.getPages());//一共有几页
-                map.put("list", mapPage);
+        Page<Map<String, Object>> mapPage = authorService.getAuthorImpactList(aid);
+        //        impactList.getPageNum();
+        //        impactList.getTotal();
+        //        impactList.getPages();
+        map.put("page", page);//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("list", mapPage);
 
 //                redisClinet.set("getAuthorImpactList", JSONArray.toJSONString(map));
 //
@@ -87,17 +86,17 @@ public class AuthorController {
     public Success getAuthorGraphCitation(@PathVariable(value = "aid") Integer aid) {
 
         List<Map<String, Object>> impactLindexDetails = new ArrayList<>();
-//        try {
-//            if (redisClinet.get("getAuthorGraphCitation") == null) {
+        try {
+            if (redisClinet.get("getAuthorGraphCitation") == null) {
 
                 impactLindexDetails = authorService.getGraphImpactbyAid(aid);
-//                redisClinet.set("getAuthorGraphCitation", JSONArray.toJSONString(impactLindexDetails));
-//            } else {
-//                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphCitation"));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+                redisClinet.set("getAuthorGraphCitation", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphCitation"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return Success.ok(impactLindexDetails);
     }
@@ -111,8 +110,17 @@ public class AuthorController {
     @GetMapping(value = "/{aid}/social")
     @ResponseBody
     public Success getAuthorSocial(@PathVariable(value = "aid") Integer aid) {
-
-        List<Map<String, Object>> impactLindexDetails = authorService.getGraphImpactbyAid(aid);
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorSocial") == null) {
+                impactLindexDetails = authorService.getGraphImpactbyAid(aid);
+                redisClinet.set("getAuthorSocial", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorSocial"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return Success.ok(impactLindexDetails);
     }
@@ -135,6 +143,7 @@ public class AuthorController {
 
     /**
      * statistics最下面的表格
+     *
      * @param aid
      * @param orderby
      * @param page
@@ -158,16 +167,16 @@ public class AuthorController {
         Map<String, Object> map = new HashMap<>();
 //        try {
 //            if (redisClinet.get("getAuthorJifsList") == null) {
-                //分页
-                PageHelper.startPage(page, size);
+        //分页
+        PageHelper.startPage(page, size);
 
-                Page<Map<String, Object>> mapPage = authorService.getAuthorJifsList(aid);
-                //        impactList.getPageNum();
-                //        impactList.getTotal();
-                //        impactList.getPages();
-                map.put("page", page);//第几页
-                map.put("total", mapPage.getPages());//一共有几页
-                map.put("data", mapPage);
+        Page<Map<String, Object>> mapPage = authorService.getAuthorJifsList(aid);
+        //        impactList.getPageNum();
+        //        impactList.getTotal();
+        //        impactList.getPages();
+        map.put("page", page);//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("data", mapPage);
 
 //                redisClinet.set("getAuthorJifsList", JSONArray.toJSONString(map));
 //
@@ -192,8 +201,17 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphPublishedByYear(@PathVariable(value = "aid") String aid) {
 
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphPublishedByYear(aid);
-
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphPublishedByYear") == null) {
+                impactLindexDetails = authorService.getAuthorGraphPublishedByYear(aid);
+                redisClinet.set("getAuthorGraphPublishedByYear", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphPublishedByYear"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Success.ok(impactLindexDetails);
     }
 
@@ -207,7 +225,17 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphhindexByYear(@PathVariable(value = "aid") String aid) {
 
-        Map<String, Object> impactLindexDetails = authorService.getAuthorGraphhindexByYear(aid);
+        Map<String, Object> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphhindexByYear") == null) {
+                impactLindexDetails = authorService.getAuthorGraphhindexByYear(aid);
+                redisClinet.set("getAuthorGraphhindexByYear", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonObjectStrToMap(redisClinet.get("getAuthorGraphhindexByYear"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return Success.ok(impactLindexDetails);
     }
@@ -222,7 +250,17 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphProportions(@PathVariable(value = "aid") String aid) {
 
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphProportions(aid);
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphProportions") == null) {
+                impactLindexDetails = authorService.getAuthorGraphProportions(aid);
+                redisClinet.set("getAuthorGraphProportions", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphProportions"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return Success.ok(impactLindexDetails);
     }
@@ -230,20 +268,31 @@ public class AuthorController {
 
     /**
      * 作者每年的文献jif图
+     *
      * @param aid
      * @return
      */
     @GetMapping(value = "/{aid}/graph/jif")
     @ResponseBody
     public Success getAuthorGraphJif(@PathVariable(value = "aid") String aid) {
-
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphJif(aid);
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphJif") == null) {
+                impactLindexDetails = authorService.getAuthorGraphJif(aid);
+                redisClinet.set("getAuthorGraphJif", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphJif"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return Success.ok(impactLindexDetails);
     }
 
     /**
      * 被引用的组织impact中affilications图
+     *
      * @param aid
      * @return
      */
@@ -272,6 +321,7 @@ public class AuthorController {
 
     /**
      * 被引用的国家impact中country图
+     *
      * @param aid
      * @return
      */
@@ -301,6 +351,7 @@ public class AuthorController {
 
     /**
      * 被引用的期刊impact中journal图
+     *
      * @param aid
      * @return
      */
@@ -331,6 +382,7 @@ public class AuthorController {
 
     /**
      * 被引用的国家impact中country图-前10和othoer
+     *
      * @param aid
      * @return
      */
@@ -338,13 +390,23 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphImpactCountry(@PathVariable(value = "aid") String aid) {
 
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphImpactCountry(aid);
-
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphImpactCountry") == null) {
+                impactLindexDetails = authorService.getAuthorGraphImpactCountry(aid);
+                redisClinet.set("getAuthorGraphImpactCountry", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphImpactCountry"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Success.ok(impactLindexDetails);
     }
 
     /**
      * 被引用的组织impact中affilications图-前10和othoer
+     *
      * @param aid
      * @return
      */
@@ -352,13 +414,23 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphImpactAffil(@PathVariable(value = "aid") String aid) {
 
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphImpactAffil(aid);
-
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphImpactAffil") == null) {
+                impactLindexDetails = authorService.getAuthorGraphImpactAffil(aid);
+                redisClinet.set("getAuthorGraphImpactAffil", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphImpactAffil"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Success.ok(impactLindexDetails);
     }
 
     /**
      * 被引用的期刊impact中journal图-前10和othoer
+     *
      * @param aid
      * @return
      */
@@ -366,13 +438,23 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphImpactJournals(@PathVariable(value = "aid") String aid) {
 
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphImpactJournals(aid);
-
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphImpactJournals") == null) {
+                impactLindexDetails = authorService.getAuthorGraphImpactJournals(aid);
+                redisClinet.set("getAuthorGraphImpactJournals", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphImpactJournals"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Success.ok(impactLindexDetails);
     }
 
     /**
      * publications中graph表
+     *
      * @param aid
      * @return
      */
@@ -380,8 +462,17 @@ public class AuthorController {
     @ResponseBody
     public Success getAuthorGraphPapers(@PathVariable(value = "aid") String aid) {
 
-        List<Map<String, Object>> impactLindexDetails = authorService.getAuthorGraphPapers(aid);
-
+        List<Map<String, Object>> impactLindexDetails = null;
+        try {
+            if (redisClinet.get("getAuthorGraphPapers") == null) {
+                impactLindexDetails = authorService.getAuthorGraphPapers(aid);
+                redisClinet.set("getAuthorGraphPapers", JSONArray.toJSONString(impactLindexDetails));
+            } else {
+                impactLindexDetails = JsonUtil.parseJsonArrayStrToListForMaps(redisClinet.get("getAuthorGraphPapers"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Success.ok(impactLindexDetails);
     }
 }

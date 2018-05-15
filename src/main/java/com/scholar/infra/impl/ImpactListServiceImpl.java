@@ -1,5 +1,6 @@
 package com.scholar.infra.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.scholar.entity.ImpactCacheRanking;
 import com.scholar.infra.ImpactListService;
@@ -20,15 +21,16 @@ public class ImpactListServiceImpl implements ImpactListService {
 
     @Override
     public Page<ImpactCacheRanking> getImpactList() {
-//        Page<ImpactCacheRanking> impactCacheRankingPage = impactCacheRankingMapper.selectAll();
-//
-//        List<ImpactCacheRanking> impactCacheRankingsResult = impactCacheRankingPage.getResult();
-//        ImpactCacheRanking impactCacheRanking = new ImpactCacheRanking();
-//        for(int i=0;i<impactCacheRankingsResult.size();i++){
-//            impactCacheRanking = impactCacheRankingsResult.get(i);
-//            impactCacheRanking.setPerson(JSONArray.fromObject(impactCacheRanking.getTop5()));
-//        }
-        return impactCacheRankingMapper.selectAll();
+        Page<ImpactCacheRanking> impactCacheRankingPage = impactCacheRankingMapper.selectAll();
+
+        List<ImpactCacheRanking> impactCacheRankingsResult = impactCacheRankingPage.getResult();
+        ImpactCacheRanking impactCacheRanking = new ImpactCacheRanking();
+        for(int i=0;i<impactCacheRankingsResult.size();i++){
+            impactCacheRanking = impactCacheRankingsResult.get(i);
+            impactCacheRanking.setPerson(JSONArray.parse(impactCacheRanking.getTop5()));
+        }
+
+        return impactCacheRankingPage;
     }
 
     @Override
