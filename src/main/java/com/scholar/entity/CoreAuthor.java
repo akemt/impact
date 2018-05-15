@@ -31,7 +31,7 @@ public class CoreAuthor {
 
     private Short flag;
 
-    private Short pic;
+    private String pic;
 
     private Long drCitedcnt;
 
@@ -48,6 +48,26 @@ public class CoreAuthor {
     private Long drCorrpautcnt;
 
     private Date corrpautcntUpdtime;
+
+    private String company;
+
+    private String country;
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getAutid() {
         return autid;
@@ -161,11 +181,11 @@ public class CoreAuthor {
         this.flag = flag;
     }
 
-    public Short getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(Short pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 

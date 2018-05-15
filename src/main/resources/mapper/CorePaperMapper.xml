@@ -95,4 +95,70 @@
     dr_Venue, dr_VenueType, dr_CitedCnt, CitedCnt_UpdTime, dr_AutCnt, dr_AutList
     from core_Paper
   </select>
+
+  <select id="getAuthorImpactList" resultType="java.util.HashMap" parameterType="java.lang.Integer">
+    SELECT
+      pr.PapID pid,
+      pr.PubID publisher,
+      pr.PtpID,
+      pr.Title name,
+      pr.YearID year,
+      pr.dr_CitedCnt citation,
+      pr.dr_AutList author,
+      pa.mendeley_readers mendeley
+      FROM core_R_Pap_Aut_Org cra
+      LEFT JOIN core_Paper pr on cra.PapID = pr.PapID
+      LEFT JOIN core_PaperAltmetricCrawl pa on pr.PapID=pa.PapID
+      where  cra.AutID=#{0}
+      ORDER BY pr.YearID
+  </select>
+
+
+  <select id="getPaperInfo" resultType="java.util.HashMap" parameterType="java.lang.String">
+    SELECT
+    pr.PapID pid,
+    pr.PubID publisher,
+    pr.PtpID,
+    pr.Title name,
+    pr.YearID year,
+    pr.dr_CitedCnt citation,
+    pr.dr_AutList author,
+    pa.mendeley_readers mendeley
+    FROM core_Paper pr
+    LEFT JOIN core_PaperAltmetricCrawl pa on pr.PapID=pa.PapID
+    where  pr.PapID=#{0}
+    ORDER BY pr.YearID
+  </select>
+
+  <select id="getPaperScoialInfo" resultType="java.util.HashMap" parameterType="java.lang.String">
+    SELECT
+    pr.PapID pid,
+    pr.dr_CitedCnt citebyCount,
+		pa.citeulike_bookmarks citeulikeBookmaeks,
+		pa.journal_impact journalInfluence,
+    pa.mendeley_readers mendeleyReaders
+    FROM core_Paper pr
+    LEFT JOIN core_PaperAltmetricCrawl pa on pr.PapID=pa.PapID
+    where  pr.PapID=#{0}
+  </select>
+
+  <select id="getPaperCiteslist" resultType="java.util.HashMap" parameterType="java.lang.String">
+    SELECT
+		pr.PapID pid,
+    pr.PubID publisher,
+    pr.Title name,
+    pr.YearID year,
+    pr.dr_CitedCnt citation,
+    pr.dr_AutList author
+    FROM core_R_Paper_Ref crpr
+    LEFT JOIN core_Paper pr  on pr.PapID=crpr.CitingPapID
+    where  crpr.CitedPapID=#{0}
+		ORDER BY pr.CitedCnt_UpdTime
+  </select>
+
+  <select id="getPaperBibtexInfo" resultType="java.util.HashMap" parameterType="java.lang.String">
+      SELECT cp.Bibtex
+        from core_PaperExtra cp
+        where cp.PapID=#{0}
+  </select>
 </mapper>

@@ -12,6 +12,7 @@ public class ScholarApplicationTests {
 	@Test
 	public void contextLoads() {
 
+
 	}
 
 }

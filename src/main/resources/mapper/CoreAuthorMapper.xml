@@ -89,4 +89,176 @@
     CorrpAutCnt_UpdTime
     from core_Author
   </select>
+
+  <select id="selectAuthorInfoByPrimaryKey" resultType="com.scholar.entity.CoreAuthor" parameterType="java.lang.String" >
+     select ca.AutID, ca.Name, ca.ImgUrl, ca.Address, ca.Email, ca.PortalUrl,
+    ca.PaperListUrl, ca.InsTime, ca.UpdTime, ca.ElsAutID, ca.ElsOrgID, ca.Flag, ca.Pic, ca.CitedCnt_UpdTime,
+    ca.PaperCnt_UpdTime, ca.FirstAutCnt_UpdTime,ca.CorrpAutCnt_UpdTime,
+		co.`Name` company,co.CnyID country
+    from core_Author ca
+		LEFT JOIN core_R_Aut_Org crao on ca.AutID=crao.AutID
+		LEFT JOIN core_Organization co on crao.OrgID=co.OrgID
+    where ca.AutID = #{0}
+  </select>
+
+
+  <select id="getAuthorJifsList" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT count(cp.PubID) num,cpubl.name name ,IFNULL(mm.IFactor,0) jif
+    FROM
+    core_R_Pap_Aut_Org crpao
+    LEFT JOIN core_Paper cp on cp.PapID = crpao.PapID
+    LEFT JOIN core_Publication cpubl on cpubl.PubID = cp.PubID
+    LEFT JOIN (select MAX(corp.IFactor) IFactor,corp.YearID,corp.PubID from core_PubIF corp GROUP BY corp.YearID,corp.PubID) mm on mm.PubID=cp.PubID
+    where crpao.AutID =#{0}
+    GROUP BY cp.PubID
+    order BY mm.IFactor desc
+  </select>
+
+  <select id="getAuthorGraphJif" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT count(cp.PubID) count,cpubl.name name ,IFNULL(mm.IFactor,0) jif
+    FROM
+    core_R_Pap_Aut_Org crpao
+    LEFT JOIN core_Paper cp on cp.PapID = crpao.PapID
+    LEFT JOIN core_Publication cpubl on cpubl.PubID = cp.PubID
+    LEFT JOIN (select MAX(corp.IFactor) IFactor,corp.YearID,corp.PubID from core_PubIF corp GROUP BY corp.YearID,corp.PubID) mm on mm.PubID=cp.PubID
+    where crpao.AutID =#{0}
+    GROUP BY cp.PubID
+    order BY mm.IFactor desc limit 10
+  </select>
+
+  <select id="getAuthorGraphPublishedByYear" resultType="java.util.HashMap" parameterType="java.lang.String" >
+        SELECT count(cp.PubID) published,cp.YearID year
+        FROM
+        core_R_Pap_Aut_Org crpao
+        LEFT JOIN core_Paper cp on cp.PapID = crpao.PapID
+        where crpao.AutID =#{0}
+        GROUP BY cp.YearID
+		ORDER BY cp.YearID
+  </select>
+
+
+  <select id="getAuthorGraphhindexByYear" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT sum(cp.dr_CitedCnt) citedList
+    FROM
+    core_R_Pap_Aut_Org crpao
+    LEFT JOIN core_Paper cp on cp.PapID = crpao.PapID
+    where crpao.AutID =#{0}
+    GROUP BY cp.YearID
+	ORDER BY citedList desc
+  </select>
+
+
+  <select id="getAuthorGraphProportionsTop10" resultType="java.util.HashMap" parameterType="java.lang.String" >
+    SELECT count(cp.PubID) count,cpubl.name proportions
+    FROM
+    core_R_Pap_Aut_Org crpao
+    LEFT JOIN core_Paper cp on cp.PapID = crpao.PapID
+    LEFT JOIN core_Publication cpubl on cpubl.PubID = cp.PubID
+    where crpao.AutID =#{0}
+    GROUP BY cp.PubID
+    order BY count desc limit 10
+  </select>
+  <select id="getAuthorGraphProportionsAll" resultType="java.lang.Integer">
+    SELECT count(cp.PubID) count
+    FROM
+    core_R_Pap_Aut_Org crpao
+    LEFT JOIN core_Paper cp on cp.PapID = crpao.PapID
+    LEFT JOIN core_Publication cpubl on cpubl.PubID = cp.PubID
+    where crpao.AutID =#{0}
+  </select>
+
+  <select id="getAuthorPapersCiteAffil" resultType="java.util.HashMap">
+    SELECT  crrr.dr_OrgName affiliation,COUNT(1) count
+    FROM core_R_Pap_Aut_Org  crpao
+    LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+    LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+    where crpao.AutID=#{aid} and crrr.AutRank=1 and crrr.dr_OrgName is not NULL
+    GROUP BY crrr.OrgID
+    ORDER BY COUNT desc
+  </select>
+
+  <select id="getAuthorPapersCiteAffilTop10" resultType="java.util.HashMap">
+      SELECT  crrr.dr_OrgName affiliation,COUNT(1) count
+      FROM core_R_Pap_Aut_Org  crpao
+      LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+      LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+      where crpao.AutID=#{aid} and crrr.AutRank=1 and crrr.dr_OrgName is not NULL
+      GROUP BY crrr.OrgID
+      ORDER BY COUNT desc limit #{limit};
+  </select>
+
+  <select id="getAuthorPapersCiteAffilAll" resultType="java.lang.Integer"  parameterType="java.lang.String" >
+    SELECT  COUNT(1) count
+    FROM core_R_Pap_Aut_Org  crpao
+    LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+    LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+    where crpao.AutID=#{0} and crrr.AutRank=1 and crrr.dr_OrgName is not NULL
+  </select>
+
+  <select id="getAuthorPapersCiteCountry" resultType="java.util.HashMap">
+        SELECT  co.CnyID country,COUNT(co.CnyID) count
+        FROM core_R_Pap_Aut_Org  crpao
+        LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+        LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+        LEFT JOIN core_Organization co on crrr.OrgID = co.OrgID
+        where crpao.AutID=#{aid} and crrr.AutRank=1  and co.CnyID is not null
+        GROUP BY co.CnyID
+        ORDER BY count desc
+  </select>
+
+  <select id="getAuthorPapersCiteCountryTop10" resultType="java.util.HashMap">
+    SELECT  co.CnyID country,COUNT(co.CnyID) count
+    FROM core_R_Pap_Aut_Org  crpao
+    LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+    LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+    LEFT JOIN core_Organization co on crrr.OrgID = co.OrgID
+    where crpao.AutID=#{aid} and crrr.AutRank=1  and co.CnyID is not null
+    GROUP BY co.CnyID
+    ORDER BY count desc limit #{limit};
+  </select>
+
+  <select id="getAuthorPapersCiteCountryAll" resultType="java.lang.Integer"  parameterType="java.lang.String" >
+    SELECT  COUNT(co.CnyID) count
+    FROM core_R_Pap_Aut_Org  crpao
+    LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+    LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+    LEFT JOIN core_Organization co on crrr.OrgID = co.OrgID
+    where crpao.AutID=#{aid} and crrr.AutRank=1  and co.CnyID is not null
+  </select>
+
+  <select id="getAuthorPapersCiteJournal" resultType="java.util.HashMap">
+    SELECT  COUNT(1) count ,kk.`Name` journal,kk.IFactor jif
+        FROM core_R_Pap_Aut_Org  crpao
+        LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+        LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+        LEFT JOIN core_Paper cp on  cp.PapID=crpr.CitingPapID
+        LEFT JOIN (SELECT cpu.PubID,cpif.IFactor,cpu.`Name` from core_PubIF cpif ,core_Publication cpu where cpu.PubID = cpif.PubID
+        and cpif.YearID=2014) kk on kk.PubID = cp.PubID
+        where crpao.AutID=#{aid} and crrr.AutRank=1 and kk.IFactor is not null
+        GROUP BY kk.`Name`,kk.IFactor
+        ORDER BY count desc
+  </select>
+
+  <select id="getAuthorPapersCiteJournalTop10" resultType="java.util.HashMap">
+    SELECT  COUNT(1) count ,kk.`Name` journal,kk.IFactor jif
+    FROM core_R_Pap_Aut_Org  crpao
+    LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+    LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+    LEFT JOIN core_Paper cp on  cp.PapID=crpr.CitingPapID
+    LEFT JOIN (SELECT cpu.PubID,cpif.IFactor,cpu.`Name` from core_PubIF cpif ,core_Publication cpu where cpu.PubID = cpif.PubID
+    and cpif.YearID=2014) kk on kk.PubID = cp.PubID
+    where crpao.AutID=#{aid} and crrr.AutRank=1 and kk.IFactor is not null
+    GROUP BY kk.`Name`,kk.IFactor
+    ORDER BY count desc limit #{limit};
+  </select>
+  <select id="getAuthorPapersCiteJournalAll" resultType="java.util.HashMap"  parameterType="java.lang.String" >
+    SELECT  COUNT(1) count,sum(kk.IFactor) jif
+        FROM core_R_Pap_Aut_Org  crpao
+        LEFT JOIN core_R_Paper_Ref crpr ON crpao.PapID=crpr.CitedPapID
+        LEFT JOIN core_R_Pap_Aut_Org crrr on crrr.PapID=crpr.CitingPapID
+        LEFT JOIN core_Paper cp on  cp.PapID=crpr.CitingPapID
+        LEFT JOIN (SELECT cpu.PubID,cpif.IFactor,cpu.`Name` from core_PubIF cpif ,core_Publication cpu where cpu.PubID = cpif.PubID
+        and cpif.YearID=2014) kk on kk.PubID = cp.PubID
+        where crpao.AutID=#{aid} and crrr.AutRank=1 and kk.IFactor is not null
+  </select>
 </mapper>

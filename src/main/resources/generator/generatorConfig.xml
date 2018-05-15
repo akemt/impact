@@ -35,7 +35,9 @@
             <property name="rootInterface" value=""/>
         </javaClientGenerator>
 
-        <table tableName="%">
+        <!--全部-->
+        <table tableName="impact_lindex_detail">
+        <!--<table tableName="%">-->
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->

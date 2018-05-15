@@ -1,6 +1,6 @@
 package com.scholar.entity;
 
-import net.sf.json.JSONArray;
+import com.alibaba.fastjson.JSONArray;
 
 import java.util.Date;
 
@@ -25,7 +25,7 @@ public class ImpactCacheRanking {
 
     private String description;
 
-    private JSONArray person = new JSONArray();
+    private Object person;
 
     public Integer getLid() {
         return lid;
@@ -43,11 +43,11 @@ public class ImpactCacheRanking {
         this.description = description;
     }
 
-    public JSONArray getPerson() {
+    public Object getPerson() {
         return person;
     }
 
-    public void setPerson(JSONArray person) {
+    public void setPerson(Object person) {
         this.person = person;
     }
 
@@ -104,7 +104,8 @@ public class ImpactCacheRanking {
     }
 
     public void setTop5(String top5) {
-        this.top5 = top5 == null ? null : top5.trim();
+        this.top5 = top5 == null ? "" : top5.trim();
+        setPerson(JSONArray.parse(top5));
     }
 
     public String getContent() {
