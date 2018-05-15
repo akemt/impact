@@ -9,8 +9,6 @@ import java.util.Map;
 
 public interface AuthorService {
 
-    long getAuthorImpactCnt(Integer aid);
-
     /**
      * 根据aid ,查询图形信息
      *
@@ -26,7 +24,7 @@ public interface AuthorService {
      * @param aid
      * @return
      */
-    Page<Map<String, Object>> getAuthorImpactList(Integer aid);
+    Map<String, Object> getAuthorImpactList(Integer aid,String orderby, Integer page, Integer size);
 
 
     /**
@@ -43,9 +41,7 @@ public interface AuthorService {
      * @param aid
      * @return
      */
-    Page<Map<String, Object>> getAuthorJifsList(String aid);
-
-    long getAuthorJifsListCnt(String aid);
+    Map<String, Object> getAuthorJifsList(String aid, String orderby, Integer page, Integer size);
 
     /**
      * 作者每年的文献published图
@@ -85,7 +81,7 @@ public interface AuthorService {
      * @param aid
      * @return
      */
-    Page<Map<String, Object>> getAuthorPapersCiteAffil(String aid);
+    Map<String, Object> getAuthorPapersCiteAffil(String aid, String orderby, Integer page, Integer size);
 
     /**
      * 被引用的组织impact中affilications图-前10和othoer
@@ -101,7 +97,7 @@ public interface AuthorService {
      * @param aid
      * @return
      */
-    Page<Map<String, Object>> getAuthorPapersCiteCountry(String aid);
+    Map<String, Object> getAuthorPapersCiteCountry(String aid, String orderby, Integer page, Integer size);
 
     /**
      * 被引用的国家impact中country图-前10和othoer
@@ -116,7 +112,7 @@ public interface AuthorService {
      * @param aid
      * @return
      */
-    Page<Map<String, Object>>  getAuthorPapersCiteJournal(String aid);
+    Map<String, Object> getAuthorPapersCiteJournal(String aid, String orderby, Integer page, Integer size);
 
     /**
      * 被引用的国家impact中country图-前10和othoer

@@ -32,29 +32,7 @@ public class ImpactListController {
     @GetMapping(value = "/lists")
     @ResponseBody
     public Success getImpactList(String orderby, Integer page, Integer size) {
-
-
-        //page 默认1
-        if (page == null) {
-            page = 1;
-        }
-        //size 每页的个数，null 显示全部
-        if (size == null) {
-            size = (int)listService.getImpactCacheRankingCnt();
-        }
-
-        //分页
-        PageHelper.startPage(page, size);
-
-        Page<ImpactCacheRanking> impactList = listService.getImpactList();
-//        impactList.getPageNum();
-//        impactList.getTotal();
-//        impactList.getPages();
-        Map<String, Object> map = new HashMap<>();
-        map.put("page", page);//第几页
-        map.put("total", impactList.getPages());//一共有几页
-        map.put("list", impactList);
-
+        Map<String, Object> map = listService.getImpactList(orderby,page,size);
         return Success.ok(map);
     }
 
@@ -66,27 +44,7 @@ public class ImpactListController {
     @GetMapping(value = "/list/{lid}/persons")
     @ResponseBody
     public Success getImpactPersonsList(@PathVariable(value = "lid")String lid, String orderby, Integer page, Integer size) {
-
-
-        //page 默认1
-//        if (page == null) {
-//            page = 1;
-//        }
-//        //size 每页的个数，null 显示全部
-//        if (size == null) {
-//            size = (int)listService.getImpactPersonsList();
-//            size =10;
-//        }
-//
-//        //分页
-//        PageHelper.startPage(page, size);
-//
-//        Page<ImpactCacheRanking> impactList = listService.getImpactPersonsList();
-        Map<String, Object> map = new HashMap<>();
-//        map.put("page", page);//第几页
-//        map.put("total", impactList.getPages());//一共有几页
-//        map.put("list", impactList);
-
+        Map<String, Object> map = listService.getImpactPersonsList(lid,orderby,page,size);
         return Success.ok(map);
     }
 }

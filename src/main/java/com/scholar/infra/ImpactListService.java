@@ -14,7 +14,14 @@ public interface ImpactListService {
      *
      * @return
      */
-    Page<ImpactCacheRanking> getImpactList();
+    Map<String, Object> getImpactList(String orderby, Integer page, Integer size);
+
+    /**
+     * 获取文献列表
+     *
+     * @return
+     */
+    Map<String, Object> getImpactPersonsList(String lid,String orderby, Integer page, Integer size);
 
     /**
      * 查询所有条数

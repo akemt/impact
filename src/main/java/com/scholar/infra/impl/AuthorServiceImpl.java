@@ -3,6 +3,7 @@ package com.scholar.infra.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.scholar.common.ArrayUtils;
 import com.scholar.entity.CoreAuthor;
 import com.scholar.entity.ImpactLindexDetail;
@@ -28,12 +29,6 @@ public class AuthorServiceImpl implements AuthorService {
     private CoreAuthorMapper coreAuthorMapper;
 
     @Override
-    public long getAuthorImpactCnt(Integer aid) {
-        Page<Map<String, Object>> mapPage = corePaperMapper.getAuthorImpactList(aid);
-        return mapPage.size();
-    }
-
-    @Override
     public List<Map<String, Object>> getGraphImpactbyAid(Integer aid) {
 
         List<ImpactLindexDetail> lindexDetailList = impactLindexDetailMapper.selectAllbyAid(aid);
@@ -55,31 +50,55 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Page<Map<String, Object>> getAuthorImpactList(Integer aid) {
-        return corePaperMapper.getAuthorImpactList(aid);
+    public Map<String, Object> getAuthorImpactList(Integer aid, String orderby, Integer page, Integer size) {
+        //page 默认1
+        if (page == null) {
+            page = 1;
+        }
+        //size 每页的个数，null 显示全部
+        if (size == null) {
+            size = (int) corePaperMapper.getAuthorImpactList(aid).size();
+        }
+        //分页
+        PageHelper.startPage(page, size);
+        Page<Map<String, Object>> mapPage = corePaperMapper.getAuthorImpactList(aid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", mapPage.getPageNum());//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("list", mapPage);
+        return map;
     }
 
     @Override
     public CoreAuthor getAuthorInfo(String aid) {
-        CoreAuthor coreAuthor  = coreAuthorMapper.selectAuthorInfoByPrimaryKey(aid);
-        if(coreAuthor !=null){
-            coreAuthor.setPic("/static/img/"+aid+".jpg");
+        CoreAuthor coreAuthor = coreAuthorMapper.selectAuthorInfoByPrimaryKey(aid);
+        if (coreAuthor != null) {
+            coreAuthor.setPic("/static/img/" + aid + ".jpg");
         }
-
         return coreAuthor;
     }
 
     @Override
-    public Page<Map<String, Object>> getAuthorJifsList(String aid) {
+    public Map<String, Object> getAuthorJifsList(String aid, String orderby, Integer page, Integer size) {
+        //page 默认1
+        if (page == null) {
+            page = 1;
+        }
+        //size 每页的个数，null 显示全部
+        if (size == null) {
+            size = (int) coreAuthorMapper.getAuthorJifsList(aid).size();
+        }
+        //分页
+        PageHelper.startPage(page, size);
 
-
-        return coreAuthorMapper.getAuthorJifsList(aid);
+        Page<Map<String, Object>> mapPage = coreAuthorMapper.getAuthorJifsList(aid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", mapPage.getPageNum());//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("data", mapPage);
+        return map;
     }
 
-    @Override
-    public long getAuthorJifsListCnt(String aid) {
-        return coreAuthorMapper.getAuthorJifsList(aid).size();
-    }
 
     @Override
     public List<Map<String, Object>> getAuthorGraphPublishedByYear(String aid) {
@@ -92,8 +111,24 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Page<Map<String, Object>> getAuthorPapersCiteAffil(String aid) {
-        return coreAuthorMapper.getAuthorPapersCiteAffil(aid);
+    public Map<String, Object> getAuthorPapersCiteAffil(String aid, String orderby, Integer page, Integer size) {
+        //page 默认1
+        if (page == null) {
+            page = 1;
+        }
+        //size 每页的个数，null 显示全部
+        if (size == null) {
+            size = 200;
+        }
+        //分页
+        PageHelper.startPage(page, size);
+        Page<Map<String, Object>> mapPage = coreAuthorMapper.getAuthorPapersCiteAffil(aid);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", mapPage.getPageNum());//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("list", mapPage);
+        return map;
     }
 
 
@@ -101,7 +136,7 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Map<String, Object>> getAuthorGraphImpactAffil(String aid) {
 
 
-        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorPapersCiteAffilTop10(aid,10);
+        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorPapersCiteAffilTop10(aid, 10);
         Map<String, Object> map = null;
         Integer count = 0;
         for (int i = 0; i < mapList.size(); i++) {
@@ -118,15 +153,31 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public  Page<Map<String, Object>> getAuthorPapersCiteCountry(String aid) {
-        return coreAuthorMapper.getAuthorPapersCiteCountry(aid);
+    public Map<String, Object> getAuthorPapersCiteCountry(String aid, String orderby, Integer page, Integer size) {
+        //page 默认1
+        if (page == null) {
+            page = 1;
+        }
+        //size 每页的个数，null 显示全部
+        if (size == null) {
+            size = 100;
+        }
+        //分页
+        PageHelper.startPage(page, size);
+        Page<Map<String, Object>> mapPage = coreAuthorMapper.getAuthorPapersCiteCountry(aid);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", mapPage.getPageNum());//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("list", mapPage);
+        return map;
     }
 
     @Override
     public List<Map<String, Object>> getAuthorGraphImpactCountry(String aid) {
 
 
-        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorPapersCiteCountryTop10(aid,10);
+        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorPapersCiteCountryTop10(aid, 10);
         Map<String, Object> map = null;
         Integer count = 0;
         for (int i = 0; i < mapList.size(); i++) {
@@ -143,13 +194,28 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Page<Map<String, Object>>  getAuthorPapersCiteJournal(String aid) {
-        return coreAuthorMapper.getAuthorPapersCiteJournal(aid);
+    public Map<String, Object> getAuthorPapersCiteJournal(String aid, String orderby, Integer page, Integer size) {
+        //page 默认1
+        if (page == null) {
+            page = 1;
+        }
+        //size 每页的个数，null 显示全部
+        if (size == null) {
+            size = 100;
+        }
+        //分页
+        PageHelper.startPage(page, size);
+        Page<Map<String, Object>> mapPage = coreAuthorMapper.getAuthorPapersCiteJournal(aid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("page", mapPage.getPageNum());//第几页
+        map.put("total", mapPage.getPages());//一共有几页
+        map.put("list", mapPage);
+        return map;
     }
 
     @Override
     public List<Map<String, Object>> getAuthorGraphImpactJournals(String aid) {
-        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorPapersCiteJournalTop10(aid,10);
+        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorPapersCiteJournalTop10(aid, 10);
         Map<String, Object> map = null;
         Integer count = 0;
         Double jif = 0.0;
@@ -159,10 +225,10 @@ public class AuthorServiceImpl implements AuthorService {
             jif = jif + Double.valueOf(map.get("jif").toString());
         }
 
-        Map<String,Object> mapPaperCite = coreAuthorMapper.getAuthorPapersCiteJournalAll(aid);
+        Map<String, Object> mapPaperCite = coreAuthorMapper.getAuthorPapersCiteJournalAll(aid);
         Map<String, Object> map1 = new HashMap<>();
         map1.put("count", Integer.valueOf(mapPaperCite.get("count").toString()) - count);
-        map1.put("jif",Double.valueOf(mapPaperCite.get("jif").toString()) - jif);
+        map1.put("jif", Double.valueOf(mapPaperCite.get("jif").toString()) - jif);
         map1.put("journal", "other");
         mapList.add(map1);
         return mapList;
@@ -171,17 +237,20 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<Map<String, Object>> getAuthorGraphPapers(String aid) {
-        return null;
+
+        List<Map<String, Object>> aurGraphPaper = coreAuthorMapper.getAuthorGraphPapersByAidAndYear(aid);
+
+        return aurGraphPaper;
     }
 
 
     @Override
     public Map<String, Object> getAuthorGraphhindexByYear(String aid) {
 
-        List<Map<String, Object>>  mapList = coreAuthorMapper.getAuthorGraphhindexByYear(aid);
+        List<Map<String, Object>> mapList = coreAuthorMapper.getAuthorGraphhindexByYear(aid);
         Map<String, Object> map = new HashMap<>();
         map.put("citedList", ArrayUtils.listMapToLong(mapList));
-        map.put("hindex",0);
+        map.put("hindex", 0);
         return map;
     }
 

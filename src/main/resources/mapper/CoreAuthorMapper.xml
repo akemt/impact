@@ -261,4 +261,31 @@
         and cpif.YearID=2014) kk on kk.PubID = cp.PubID
         where crpao.AutID=#{aid} and crrr.AutRank=1 and kk.IFactor is not null
   </select>
+
+  <select id="getAuthorGraphPapersYear" resultType="java.util.HashMap"  parameterType="java.lang.String" >
+        SELECT  cp.YearID year
+        FROM core_R_Pap_Aut_Org  crpao
+        LEFT JOIN core_Paper cp on  crpao.PapID=cp.PapID
+        where crpao.AutID=#{0}
+        GROUP BY cp.YearID
+        ORDER BY year
+  </select>
+
+
+    <select id="getAuthorGraphPapersByAidAndYear" resultType="java.util.HashMap" >
+      SELECT
+      pr.PapID pid,
+      pr.YearID year,
+      pr.dr_CitedCnt citation,
+      pa.mendeley_readers mendeley,
+			ISNULL(kk.IFactor) IFactor
+      FROM core_R_Pap_Aut_Org cra
+      LEFT JOIN core_Paper pr on cra.PapID = pr.PapID
+      LEFT JOIN core_PaperAltmetricCrawl pa on pr.PapID=pa.PapID
+			LEFT JOIN (SELECT cpu.PubID,cpif.IFactor from core_PubIF cpif ,core_Publication cpu where cpu.PubID = cpif.PubID
+      and cpif.YearID=2014) kk on kk.PubID = pr.PubID
+      where  cra.AutID=#{0}
+			GROUP BY pr.PapID
+      ORDER BY pa.mendeley_readers
+    </select>
 </mapper>

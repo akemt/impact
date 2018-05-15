@@ -35,21 +35,26 @@ public interface CoreAuthorMapper {
 
     List<Map<String, Object>> getAuthorGraphJif(String aid);
 
-    Page<Map<String, Object>> getAuthorPapersCiteAffil(@Param("aid")String aid);
+    Page<Map<String, Object>> getAuthorPapersCiteAffil(@Param("aid") String aid);
 
-    List<Map<String, Object>> getAuthorPapersCiteAffilTop10(@Param("aid")String aid,@Param("limit")Integer limit);
+    List<Map<String, Object>> getAuthorPapersCiteAffilTop10(@Param("aid") String aid, @Param("limit") Integer limit);
 
     Integer getAuthorPapersCiteAffilAll(String aid);
 
-    Page<Map<String, Object>> getAuthorPapersCiteCountry(@Param("aid")String aid);
+    Page<Map<String, Object>> getAuthorPapersCiteCountry(@Param("aid") String aid);
 
-    List<Map<String, Object>> getAuthorPapersCiteCountryTop10(@Param("aid")String aid,@Param("limit")Integer limit);
+    List<Map<String, Object>> getAuthorPapersCiteCountryTop10(@Param("aid") String aid, @Param("limit") Integer limit);
 
     Integer getAuthorPapersCiteCountryAll(String aid);
 
-    Page<Map<String, Object>> getAuthorPapersCiteJournal(@Param("aid")String aid);
+    Page<Map<String, Object>> getAuthorPapersCiteJournal(@Param("aid") String aid);
 
-    List<Map<String, Object>> getAuthorPapersCiteJournalTop10(@Param("aid")String aid,@Param("limit")Integer limit);
+    List<Map<String, Object>> getAuthorPapersCiteJournalTop10(@Param("aid") String aid, @Param("limit") Integer limit);
 
-    Map<String,Object> getAuthorPapersCiteJournalAll(String aid);
+    Map<String, Object> getAuthorPapersCiteJournalAll(String aid);
+
+
+    List<Map<String, Object>> getAuthorGraphPapersYear(String aid);
+
+    List<Map<String, Object>> getAuthorGraphPapersByAidAndYear(String aid);
 }

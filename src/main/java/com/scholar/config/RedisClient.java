@@ -26,6 +26,32 @@ public class RedisClient {
         }
     }
 
+    public void set(String key, String value,long time) throws Exception {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            //jedis.set(key, value);
+            // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
+            jedis.set(key, value, "NX", "EX", time);
+        } finally {
+            //返还到连接池
+            jedis.close();
+        }
+    }
+
+    public void setHalfhourTime(String key, String value) throws Exception {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            //jedis.set(key, value);
+            // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
+            jedis.set(key, value, "NX", "EX", 1800);
+        } finally {
+            //返还到连接池
+            jedis.close();
+        }
+    }
+
     public String get(String key) throws Exception {
 
         Jedis jedis = null;
